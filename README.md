@@ -67,10 +67,6 @@ To successfully complete this hackathon, you will need the following:
 - Ability to provision resources in **Sweden Central** or [another supported region](https://learn.microsoft.com/en-us/azure/ai-foundry/openai/concepts/models?tabs=global-standard%2Cstandard-chat-completions#global-standard-model-availability). 
 
 
-
-## Arquitetura
-
-
 ## Challenges
 
 - **Challenge 00**: **[Environment Setup & Azure Resource Deployment](challenge-0/README.md)**: Fork the repository, set up GitHub Codespaces development environment, deploy Azure resources (Microsoft Foundry, Azure AI Search, Blob Storage), configure environment variables with automated scripts, and verify your setup for the hackathon
