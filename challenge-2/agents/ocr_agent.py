@@ -258,9 +258,24 @@ Your primary responsibility is to extract text from images and documents using t
 
 You are designed to be a reliable, accurate OCR processing service for insurance claims processing."""
             
-            # Create the agent version with function tool
+            # First, ensure the agent exists in Foundry (this creates a persistent agent)
+            agent_name = "OCRAgent"
+            try:
+                # Try to get existing agent
+                base_agent = project_client.agents.get(agent_name=agent_name)
+                print(f"✅ Found existing agent in Foundry: {base_agent.name}")
+            except Exception:
+                # Agent doesn't exist, create it
+                base_agent = project_client.agents.create(
+                    agent_name=agent_name,
+                    model=model_deployment_name,
+                    instructions=agent_instructions,
+                )
+                print(f"✅ Created persistent agent in Foundry: {base_agent.name}")
+            
+            # Now create a version with the function tool
             agent = project_client.agents.create_version(
-                agent_name="OCRAgent",
+                agent_name=agent_name,
                 definition=PromptAgentDefinition(
                     model=model_deployment_name,
                     instructions=agent_instructions,

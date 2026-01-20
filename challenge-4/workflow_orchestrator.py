@@ -17,12 +17,12 @@ from azure.identity import DefaultAzureCredential
 
 # Import the OCR and JSON structuring functions from challenge-2
 # Handle both local development and container deployment paths
-if os.path.exists(os.path.join(os.path.dirname(__file__), '..', 'challenge-2', 'scripts')):
+if os.path.exists(os.path.join(os.path.dirname(__file__), '..', 'challenge-2', 'agents')):
     # Local development: challenge-2 is a sibling directory
-    sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'challenge-2', 'scripts'))
+    sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'challenge-2', 'agents'))
 else:
     # Container deployment: challenge-2 is in the same directory as the app
-    sys.path.append(os.path.join(os.path.dirname(__file__), 'challenge-2', 'scripts'))
+    sys.path.append(os.path.join(os.path.dirname(__file__), 'challenge-2', 'agents'))
 from ocr_agent import extract_text_with_ocr
 
 # Load environment
