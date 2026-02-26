@@ -229,10 +229,10 @@ def main():
     
     try:
         # Get image path from CLI args or use default
-        test_image_path = sys.argv[1] if len(sys.argv) > 1 else "/workspaces/claims-processing-hack/challenge-0/data/statements/crash1_front.jpeg"
+        test_image_path = sys.argv[1] if len(sys.argv) > 1 else "./claims-processing-hack/challenge-0/data/statements/crash1_front.jpeg"
         
         # Create output directory for OCR results
-        output_dir = "/workspaces/claims-processing-hack/challenge-2/ocr_results"
+        output_dir = "./claims-processing-hack/challenge-2/ocr_results"
         os.makedirs(output_dir, exist_ok=True)
         
         # Create AI Project Client
@@ -259,7 +259,7 @@ Your primary responsibility is to extract text from images and documents using t
 You are designed to be a reliable, accurate OCR processing service for insurance claims processing."""
             
             # Create the agent version with the function tool
-            agent = project_client.agents.create_version(
+            agent_reference = project_client.agents.create_version(
                 agent_name="OCRAgent",
                 definition=PromptAgentDefinition(
                     model=model_deployment_name,
@@ -268,7 +268,7 @@ You are designed to be a reliable, accurate OCR processing service for insurance
                 ),
             )
             
-            print(f"✅ Created OCR Agent: {agent.name} (version {agent.version})")
+            print(f"✅ Created OCR Agent: {agent_reference.name} (version {agent_reference.version})")
             print(f"   Agent visible in Foundry portal\n")
             
             # Get OpenAI client for responses
@@ -290,7 +290,7 @@ Provide a summary of what text was found and what it represents."""
             
             response = openai_client.responses.create(
                 input=user_query,
-                extra_body={"agent": {"name": agent.name, "type": "agent_reference"}},
+                extra_body={"agent_reference": {"name": agent_reference.name, "type": "agent_reference"}},
             )
             
             print(f"Response output: {response.output_text}")
@@ -339,7 +339,7 @@ Provide a summary of what text was found and what it represents."""
                 final_response = openai_client.responses.create(
                     input=input_list,
                     previous_response_id=response.id,
-                    extra_body={"agent": {"name": agent.name, "type": "agent_reference"}},
+                    extra_body={"agent_reference": {"name": agent_reference.name, "type": "agent_reference"}},
                 )
                 
                 print("=== OCR Agent Final Response ===")
